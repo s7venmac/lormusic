@@ -27,6 +27,15 @@ import com.company.altasnotas.viewmodels.activities.MainActivityViewModel;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.admanager.AdManagerAdRequest;
+import com.google.android.gms.ads.admanager.AdManagerInterstitialAd;
+import com.google.android.gms.ads.admanager.AdManagerInterstitialAdLoadCallback;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
@@ -61,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
     private String frag;
     private FirebaseAuth mAuth;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         setDefaultDialogHeight();
+
 
         activityMainBinding.mainNavBottom.setItemIconTintList(null);
         activityMainBinding.mainNavBottom.setOnNavigationItemSelectedListener(navListener);
@@ -95,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-    onNotificationOpened(getIntent());
+        onNotificationOpened(getIntent());
         reInitializePlayerViews();
     }
 
@@ -141,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
             if (PlayerFragment.mService != null) {
 
                 if (PlayerFragment.playerView.getPlayer() != null) {
-                    if(!PlayerFragment.isDimissed){
+                    if (!PlayerFragment.isDimissed) {
                         System.out.println("Restore players!");
                         Playlist playlist = PlayerFragment.mService.playlist;
                         Integer position = PlayerFragment.mService.position;
@@ -154,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                         viewModel.setCurrentSongTitle(playlist.getSongs().get(position).getTitle());
                         viewModel.setCurrentSongAlbum(playlist.getTitle());
                         viewModel.setCurrentSongAuthor(playlist.getDescription());
-                        PlayerFragment playerFragment = new PlayerFragment(playlist, position, seekedTo, true, state, null, isFav,true,false);
+                        PlayerFragment playerFragment = new PlayerFragment(playlist, position, seekedTo, true, state, null, isFav, true, false);
                         getSupportFragmentManager().beginTransaction().replace(R.id.slidingLayoutFrag, playerFragment).commit();
                         getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentContainer, new HomeFragment(true)).commit();
                         activityMainBinding.slidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
@@ -291,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
-       onNotificationOpened(intent);
+        onNotificationOpened(intent);
     }
 
     @Override
@@ -312,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (mAuth.getCurrentUser() != null) {
             String uid = mAuth.getCurrentUser().getUid();
-            if (uid!=null) {
+            if (uid != null) {
 
                 database_ref.child("users").child(mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -323,24 +334,24 @@ public class MainActivity extends AppCompatActivity {
                                 viewModel.setPhotoUrl(uri.toString());
                             }
                         }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception exception) {
 
-                                if ((Integer.parseInt(snapshot.child("login_method").getValue().toString())) != 1) {
-                                    String url = snapshot.child("photoUrl").getValue().toString();
-                                    if (url != null) {
+                                                        if ((Integer.parseInt(snapshot.child("login_method").getValue().toString())) != 1) {
+                                                            String url = snapshot.child("photoUrl").getValue().toString();
+                                                            if (url != null) {
 
-                                        viewModel.setPhotoUrl(url);
+                                                                viewModel.setPhotoUrl(url);
 
-                                    } else {
-                                        viewModel.setPhotoUrl("");
-                                    }
-                                    Log.d(FIREBASE, "Storage exception: " + exception.getLocalizedMessage() + "\nLoad from Page URL instead");
+                                                            } else {
+                                                                viewModel.setPhotoUrl("");
+                                                            }
+                                                            Log.d(FIREBASE, "Storage exception: " + exception.getLocalizedMessage() + "\nLoad from Page URL instead");
 
-                                }
-                            }
-                        }
-                      );
+                                                        }
+                                                    }
+                                                }
+                        );
                     }
 
                     @Override
@@ -361,7 +372,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void onNotificationOpened(Intent intent){
+    private void onNotificationOpened(Intent intent) {
         frag = intent.getStringExtra("frag");
         if (frag != null) {
             if (frag.equals("PlayerFragment")) {

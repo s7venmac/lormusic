@@ -42,7 +42,7 @@ public class FavoritesFragment extends Fragment {
 
     private DatabaseReference database_ref;
     private MainActivity mainActivity;
-    private String FRAGMENT ="FavoritesFragment";
+    private final String FRAGMENT ="FavoritesFragment";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

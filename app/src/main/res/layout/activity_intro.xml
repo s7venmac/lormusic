@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/altas_notes" />
+        app:srcCompat="@drawable/logo" />
 
     <TextView
         android:id="@+id/introTitle"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         android:fontFamily="@font/oswald"
-        android:text="Altas Notas"
+        android:text="Lor Music"
         android:textColor="#020202"
         android:textSize="44sp"
         app:layout_constraintBottom_toTopOf="@+id/introLogo"

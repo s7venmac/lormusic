@@ -40,6 +40,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class CurrentPlaylistAdapter extends RecyclerView.Adapter<CurrentPlaylistAdapter.MyViewHolder> {
     public static  Playlist playlist;
@@ -189,7 +190,13 @@ public class CurrentPlaylistAdapter extends RecyclerView.Adapter<CurrentPlaylist
         holder.databaseReference.child("music").child("albums").child(playlist.getSongs().get(position).getAuthor()).child(playlist.getSongs().get(position).getAlbum()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snap) {
-                holder.currentAuthor.setText(snap.child("description").getValue().toString());
+                Object description = (Object) snap.child("description").getValue();
+//
+                if (description != null) {
+                    holder.currentAuthor.setText(description.toString());
+                } else {
+                    holder.currentAuthor.setText("");
+                }
             }
 
             @Override

@@ -20,6 +20,12 @@ import com.company.altasnotas.databinding.FragmentHomeBinding;
 import com.company.altasnotas.fragments.login_and_register.LoginFragment;
 import com.company.altasnotas.fragments.profile.ProfileFragment;
 import com.company.altasnotas.models.Playlist;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,6 +49,8 @@ public class HomeFragment extends Fragment {
     private ArrayList<String> albums;
     private MainActivity mainActivity;
     private final Boolean isOpenByLogin;
+    private InterstitialAd mInterstitialAd;
+    private static final String TAG = "MainActivity";
 
     public static FragmentHomeBinding binding;
 
@@ -81,6 +89,7 @@ public class HomeFragment extends Fragment {
            mainActivity.getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_up, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out_up).replace(R.id.mainFragmentContainer, new LoginFragment()).commit();
         }
         return view;
+
     }
 
     private void setUpArrays() {

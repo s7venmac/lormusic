@@ -41,7 +41,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
-public class CurrentPlaylistFragmentViewModel  extends ViewModel {
+public class
+CurrentPlaylistFragmentViewModel  extends ViewModel {
     private Playlist _playlist, p;
     private DatabaseReference database_ref;
     private FirebaseAuth mAuth;
